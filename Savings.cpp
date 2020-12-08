@@ -6,7 +6,7 @@
 Savings::Savings()
 {}
 
-//constructor
+//Loaded Constructor, takes in the name of the account holder and their set interest rate
 Savings::Savings(const std::string& first, const std::string& last, double& interest)
 {
 	firstName = first; 
@@ -14,21 +14,21 @@ Savings::Savings(const std::string& first, const std::string& last, double& inte
 	interestRate = interest; 
 }
 
-//getter
+//Interest Rate Getter
 double Savings::getInterestRate() const
 {
 	return interestRate; 
 }
 
-//setter 
+//Interest Rate Setter 
 void Savings::setInterestRate(double& interest)
 {
 	interestRate = interest; 
 }
 
-//display override 
+//Displays the info of the savings account
 void Savings::display() const
 {
 	Account::display(); 
-	std::cout << "Interest Rate: " << getInterestRate() << std::endl; 
+	std::cout << "Interest Rate: " << getInterestRate() <<"%"<< std::endl; 
 }

@@ -1,3 +1,5 @@
+//Represents the Savings Data Collection of a backend banking system, the Savings account can have money deposited into it but not withdrawn
+//The savings account also has a mutable interest rate
 #pragma once
 
 #include "Account.h"

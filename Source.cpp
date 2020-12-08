@@ -1,4 +1,7 @@
-// Project 3
+// Created by Alex Hoerr and Anastasiia Popovych
+//Testing driver for banking backend account handling software, allows the creation of three tyes of accounts Savings, Checking,
+//and Premium Checking all derived from a base account model. The testing driver allows the user to create accounts with,
+//random data values and display all accounts that have been created
 
 #include <iostream>
 #include <vector>
@@ -24,7 +27,7 @@ string randomName(default_random_engine&, const vector<string>&);
 void genCheckingAccounts(int, vector<Account*>&, default_random_engine&, const vector<string>&, const vector<string>&);
 void genPremiumCheckingAccounts(int, vector<Account*>&, default_random_engine&, const vector<string>&, const vector<string>&);
 void displayAccounts(const vector<Account*>&);
-void genSavingsAccounts(int, voctor<Account*>&, default_random_engine&, const vector<string>&, const vector<string>&, double&);  
+void genSavingsAccounts(int, vector<Account*>&, default_random_engine&, const vector<string>&, const vector<string>&);  
 
 int main()
 {
@@ -55,7 +58,6 @@ int main()
 
 
 		int numAcc;
-		double interest ; 
 		switch (selectionOperator) {
 		//Generates a specified number of checking accounts and displays the accounts details
 		case 1:
@@ -73,9 +75,7 @@ int main()
 		case 3:
 			cout << "How many savings accounts would you like to create? ";
 			cin >> numAcc ;
-			cout >> "What is the interest?;
-			cin >> interest ; 
-			genSavingsAccounts(numAcc, accRegistry, engine, fnames, lnames, interest) ; 
+			genSavingsAccounts(numAcc, accRegistry, engine, fnames, lnames) ; 
 			break;
 		//Displays all of the accounts in the vector
 		case 4:
@@ -150,13 +150,17 @@ void genPremiumCheckingAccounts(int numAcc, vector<Account*>& accList, default_r
 	}
 }
 
-//Generate random savings accounts 
+//Generate random savings accounts that varies in the account name and amount totals
+//Also sets a random interest rate between 0 and 75%
 void genSavingsAccounts( int numAcc, vector<Account*>& accList, default_random_engine& engine,
-			const vector<string>& fnames, const vector<string>& lnames, double& interest)
+			const vector<string>& fnames, const vector<string>& lnames)
 {
 	uniform_int_distribution<unsigned long long> randomULL(1000, 92233720);
+	//Sets the interest rate between 0.00005 and 75.00005% for testing reasons
+	std::uniform_real_distribution<double> interestRate(.00005, 75.00005);
 	for ( int index = 0 ; index < numAcc ; index++)
 	{
+		double interest = interestRate(engine);
 		Account* tempAcc = new Savings(randomName(engine, fnames), randomName(engine, lnames), interest);
 		tempAcc->deposit(randomULL(engine));
 		tempAcc->display(); 
