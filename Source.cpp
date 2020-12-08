@@ -8,6 +8,7 @@
 #include "Account.h"
 #include "Checking.h"
 #include "PremiumChecking.h"
+#include "Savings.h"
 
 using std::cout;
 using std::endl;
@@ -23,6 +24,7 @@ string randomName(default_random_engine&, const vector<string>&);
 void genCheckingAccounts(int, vector<Account*>&, default_random_engine&, const vector<string>&, const vector<string>&);
 void genPremiumCheckingAccounts(int, vector<Account*>&, default_random_engine&, const vector<string>&, const vector<string>&);
 void displayAccounts(const vector<Account*>&);
+void genSavingsAccounts(int, voctor<Account*>&, default_random_engine&, const vector<string>&, const vector<string>&, double&);  
 
 int main()
 {
@@ -53,6 +55,7 @@ int main()
 
 
 		int numAcc;
+		double interest ; 
 		switch (selectionOperator) {
 		//Generates a specified number of checking accounts and displays the accounts details
 		case 1:
@@ -66,9 +69,13 @@ int main()
 			cin >> numAcc;
 			genPremiumCheckingAccounts(numAcc, accRegistry, engine, fnames, lnames);
 			break;
-		//TODO
+		//Generate a specified number of saving accounts and displays the accounts details
 		case 3:
-			cout << "TODO" << endl << endl;
+			cout << "How many savings accounts would you like to create? ";
+			cin >> numAcc ;
+			cout >> "What is the interest?;
+			cin >> interest ; 
+			genSavingsAccounts(numAcc, accRegistry, engine, fnames, lnames, interest) ; 
 			break;
 		//Displays all of the accounts in the vector
 		case 4:
@@ -94,7 +101,7 @@ unsigned selectionMenu()
 	cout << "MENU: \n"
 		<< "1. Create Checking accounts\n"
 		<< "2. Create Premium accounts\n"
-		<< "3. Create Savings accounts(TODO)\n"
+		<< "3. Create Savings accounts\n"
 		<< "4. Display all accounts\n"
 		<< "5. Quit\n"
 		<< "Selection : ";
@@ -140,6 +147,20 @@ void genPremiumCheckingAccounts(int numAcc, vector<Account*>& accList, default_r
 		tempAcc->deposit(randomULL(engine));
 		tempAcc->display();
 		accList.push_back(tempAcc);
+	}
+}
+
+//Generate random savings accounts 
+void genSavingsAccounts( int numAcc, vector<Account*>& accList, default_random_engine& engine,
+			const vector<string>& fnames, const vector<string>& lnames, double& interest)
+{
+	uniform_int_distribution<unsigned long long> randomULL(1000, 92233720);
+	for ( int index = 0 ; index < numAcc ; index++)
+	{
+		Account* tempAcc = new Savings(randomName(engine, fnames), randomName(engine, lnames), interest);
+		tempAcc->deposit(randomULL(engine));
+		tempAcc->display(); 
+		accList.push_back(tempAcc); 
 	}
 }
 
